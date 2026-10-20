@@ -167,6 +167,40 @@
   }
 }
 
+@layer components {
+  /* =============== Rich Text (описание из WYSIWYG-редактора админки) =============== */
+  .rich-text {
+    @apply leading-relaxed;
+  }
+  .rich-text p {
+    @apply mb-3 last:mb-0;
+  }
+  .rich-text h1, .rich-text h2, .rich-text h3 {
+    @apply font-display font-semibold mt-5 mb-2 text-foreground;
+  }
+  .rich-text h1 { @apply text-xl; }
+  .rich-text h2 { @apply text-lg; }
+  .rich-text h3 { @apply text-base; }
+  .rich-text ul {
+    @apply mb-3 list-disc space-y-1 pl-5;
+  }
+  .rich-text ol {
+    @apply mb-3 list-decimal space-y-1 pl-5;
+  }
+  .rich-text a {
+    @apply text-primary underline underline-offset-2 hover:opacity-80;
+  }
+  .rich-text strong {
+    @apply font-semibold text-foreground;
+  }
+  .rich-text blockquote {
+    @apply my-3 border-l-2 border-primary/50 pl-4 italic text-muted-foreground;
+  }
+  .rich-text code {
+    @apply rounded bg-muted px-1.5 py-0.5 font-mono text-[13px];
+  }
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
