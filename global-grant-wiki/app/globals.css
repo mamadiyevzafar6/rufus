@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+   Global Grant Wiki — дизайн-токены (shadcn/ui convention, HSL)
+   Dark Mode по умолчанию; Light включается классом .light на <html>
+   (next-themes: attribute="class", defaultTheme="dark")
+   ===================================================================== */
+
+@layer base {
+  :root {
+    /* ---- LIGHT ---- */
+    --background: 220 20% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 250 85% 58%; /* фирменный violet-accent */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 250 90% 96%;
+    --accent-foreground: 250 85% 40%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 250 85% 58%;
+
+    --radius: 0.75rem;
+
+    /* Glassmorphism (light) */
+    --glass-bg: 0 0% 100% / 0.65;
+    --glass-border: 220 13% 80% / 0.6;
+    --glass-shadow: 222 47% 11% / 0.08;
+
+    /* Glow для hover-эффекта карточек */
+    --glow: 250 85% 58% / 0.35;
+  }
+
+  .dark {
+    /* ---- DARK (default) ---- */
+    --background: 226 30% 6%; /* глубокий «чернильный» фон */
+    --foreground: 210 40% 96%;
+
+    --card: 226 26% 9%;
+    --card-foreground: 210 40% 96%;
+
+    --popover: 226 26% 9%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 255 90% 70%;
+    --primary-foreground: 226 30% 8%;
+
+    --secondary: 226 20% 14%;
+    --secondary-foreground: 210 40% 96%;
+
+    --muted: 226 20% 14%;
+    --muted-foreground: 217 15% 62%;
+
+    --accent: 255 60% 20%;
+    --accent-foreground: 255 90% 85%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 226 18% 18%;
+    --input: 226 18% 18%;
+    --ring: 255 90% 70%;
+
+    --glass-bg: 226 30% 10% / 0.6;
+    --glass-border: 226 40% 40% / 0.35;
+    --glass-shadow: 0 0 0% / 0.4;
+
+    --glow: 255 90% 70% / 0.35;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Декоративные ambient-градиенты фона (только dark) */
+  .dark body {
+    background-image:
+      radial-gradient(60rem 40rem at 15% -10%, hsl(255 90% 50% / 0.12), transparent 60%),
+      radial-gradient(50rem 35rem at 90% 10%, hsl(190 90% 50% / 0.08), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-primary/30;
+  }
+}
+
+@layer components {
+  /* =============== Glassmorphism =============== */
+  .glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid hsl(var(--glass-border));
+    box-shadow: 0 8px 32px hsl(var(--glass-shadow));
+  }
+
+  .glass-nav {
+    @apply glass border-x-0 border-t-0;
+  }
+
+  /* =============== Card hover-lift + glow =============== */
+  .card-glow {
+    transition:
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .card-glow:hover {
+    transform: translateY(-4px);
+    border-color: hsl(var(--primary) / 0.45);
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.2),
+      0 12px 40px -8px var(--glow),
+      0 4px 16px -4px hsl(0 0% 0% / 0.3);
+  }
+
+  /* Skeleton shimmer */
+  .skeleton-shimmer {
+    @apply relative overflow-hidden bg-muted;
+  }
+  .skeleton-shimmer::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground) / 0.08),
+      transparent
+    );
+  }
+
+  /* Градиентный текст для hero-заголовка */
+  .text-gradient {
+    @apply bg-gradient-to-r from-indigo-400 via-violet-400 to-sky-400 bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
